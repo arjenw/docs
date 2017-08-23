@@ -2,6 +2,7 @@
 title: "Desktop Modeler"
 toc-level: 1
 description: "Presents all of the available release notes for the Mendix Desktop Modeler."
+frontpage_featured: true
 ---
 
 These are the release notes for the Mendix Desktop Modeler:
@@ -66,3 +67,4 @@ The known issues for each release are described in [Known Issues](known-issues).
 The Windows Service release notes can be found in [Windows Service](windows-service).
 
 {{% /alert %}}
+
