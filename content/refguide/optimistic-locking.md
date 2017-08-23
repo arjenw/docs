@@ -17,7 +17,7 @@ Before Mendix 7.6 the runtime did no locking. Concurrent Modifications are resol
 ## Implementation in Mendix
 When Optimistic Locking is enabled, each entity gets an additional system attribute with the name `MxObjectVersion` of type `Long`. This field is automatically populated with the correct value. The default value is `1` and this value will be automatically increased every commit of that entity instance.
 
-Upon _update_ and _delete_, the attribute value is read from the object and compared to the value available for this record in the database. If it is the same, then the update or delete will proceed. If it is different, a `ConcurrentModificationRuntimeException` is thrown, preventing the update or delete from proceeding. The `MxObjectVersion` attribute on the Mendix object is not write-protected. Settings this value however will not result in this value being saved into the database. It's current value will be used to compare it with the value for the same record in the database.
+Upon _update_ and _delete_, the attribute value is read from the object and compared to the value available for this record in the database. If it is the same, then the update or delete will proceed. If it is different, a `ConcurrentModificationRuntimeException` is thrown, preventing the update or delete from proceeding. The `MxObjectVersion` attribute on the Mendix object is not write-protected. Setting this value however will not result in this value being saved into the database. It's current value will be used to compare it with the value for the same record in the database.
 
 ### New projects and migration
 From Mendix 7.6 onwards, Optimistic Locking is enabled by default when you create a new app. However, when migrating existing apps to Mendix 7.6, this feature is disabled by default.
@@ -34,7 +34,7 @@ When no concurrent modification occurs, update or delete happens as before. Howe
 This attribute is only added to the entities that are not derived from other entities. This way all entities will have this attribute (the derived entities will derive it from the parent entity). This causes every entity to have maximum one extra attribute in queries and an extra check upon update or delete. There can be some performance impact, although it is expected to be minor.
 
 ### How the error is reported
-The error reported in the client is "An error has occurred during processing the request". The runtime log file contains an entry with the following details:
+The error reported in the client is "Someone else is already modifying the same data. Please try again later.". The runtime log file contains an entry with the following details:
 ```
 com.mendix.modules.microflowengine.MicroflowException: com.mendix.core.CoreRuntimeException: com.mendix.systemwideinterfaces.MendixRuntimeException: com.mendix.core.CoreException: com.mendix.core.CoreRuntimeException: com.mendix.systemwideinterfaces.MendixRuntimeException: com.mendix.systemwideinterfaces.connectionbus.data.ConcurrentModificationRuntimeException: Object of type 'MyFirstModule.MyEntity' with guid '3940649673949185' cannot be updated, as it is modified by someone else
 	at MyFirstModule.MyMicroflow (Change : 'Change 'MyEntity'')
