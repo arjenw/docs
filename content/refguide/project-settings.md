@@ -161,9 +161,9 @@ Falling back to the **Runtime** option will remove the unique constraints from t
 
 ### Optimistic Locking
 
-When this option is enabled, then the App will perform optimistic locking during update and delete. This prevents overwriting changes to data made concurrently by another user. When this option is disabled, then the behavior in case of a concurrent modification is that the last writer wins. This is the behavior of Mendix 7.5 and earlier.
+When this option is enabled, then the App will use optimistic locking to prevent update and delete actions from modifying out of date data. This prevents overwriting changes to data made concurrently by another user. When this option is disabled, the behavior in case of a concurrent modification all changes are applied in the order requested. This is the behavior of Mendix 7.5 and earlier.
 
-For existing projects upgraded to Mendix 7.6 and higher, this will be disabled by default. For new projects created in Mendix 7.6 and higher this is enabled by default.
+For existing projects upgraded to Mendix 7.6 and higher, optimistic locking will be disabled by default. For new projects created in Mendix 7.6 and higher this is enabled by default.
 
 For more details on Optimistic Locking, see [Optimistic Locking](optimistic-locking).
 
