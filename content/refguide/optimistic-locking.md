@@ -6,13 +6,13 @@ parent: "data-storage"
 # Optimistic Locking
 
 ## Introduction
-_Optimistic Locking_ is a technique to guarantee prevention for concurrent modification of a table record. It differs from _pessimistic locking_ as the latter puts an actual lock on the database record at the time of reading. _Pessimistic Locking_ reduces the performance and scalability of the system. Also, this is not an applicable pattern for stateless services. _Optimistic locking_ uses a `version` column in the table to verify whether the record is still the same as it was at the time of reading it.
+_Optimistic Locking_ is a technique to guarantee prevention for concurrent modification of a table record. It uses a `version` column in the table to verify whether the record is still the same as it was at the time of reading it.
 
 ## Available since
-Optimistic locking is available from Mendix 7.6 onwards for everything except the client. That means that all updates and deletes triggered from the client will _not_ be guarded by optimistic locking. This also applies to objects send as input for microflow actions. Support for optimistic locking using the client will be implemented in future editions of Mendix.
+Optimistic locking is available from Mendix 7.6 onwards for everything except the client. That means that all updates and deletes triggered from the client will _not_ be guarded by optimistic locking. This also applies to objects send as input for microflow actions. Support for optimistic locking using the client will be implemented in future editions of Mendix. It might occur though that an optimistic locking error is shown in the client as the client executed a microflow causing an optimistic locking error.
 
 ## Behavior before Mendix 7.6 or when Optimistic Locking is disabled
-Before Mendix 7.6 the runtime did no locking. Concurrent Modifications are resolved by the Last Writer Wins strategy. This is still the behavior when optimistic locking is disabled in the `Runtime` tab of the `Project Settings`.
+Before Mendix 7.6 the runtime did no locking. When two modifications are saved then they are applied in order of processing. This is still the behavior when optimistic locking is disabled in the `Runtime` tab of the `Project Settings`.
 
 ## Implementation in Mendix
 When Optimistic Locking is enabled, each entity gets an additional system attribute with the name `MxObjectVersion` of type `Long`. This field is automatically populated with the correct value. The default value is `1` and this value will be automatically increased every commit of that entity instance.
